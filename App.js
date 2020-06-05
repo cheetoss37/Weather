@@ -1,9 +1,20 @@
 import React, {Component} from 'react';
 import { Text, View, StyleSheet, FlatList, ActivityIndicator, Image } from 'react-native';
 import ForecastCard from './Component/ForecastCard';
+//import PushNotification from 'react-native-push-notification';
 export default class App extends Component {
   constructor(props) {
     super(props);
+    /*PushNotification.configure({
+      onRegister: function (token) {
+        console.log("TOKEN:", token);
+      },
+      onNotification: function (notification) {
+        console.log("NOTIFICATION:", notification);
+      },
+      popInitialNotification: true,
+      requestPermissions: true,
+    });*/
     this.state = {
       latitude: 'lat',
       longitude: 'long',
@@ -13,8 +24,11 @@ export default class App extends Component {
   }
   componentDidMount(){
     this.getLocation();
+  //  this.noti();
+
   }
 
+  
   getLocation(){ // function to get coordinates 
     navigator.geolocation = require('@react-native-community/geolocation');
     navigator.geolocation.getCurrentPosition(
@@ -50,6 +64,27 @@ export default class App extends Component {
     console.log(this.state.longitude)
   }
 
+/*
+  noti(){
+    PushNotification.localNotificationSchedule({
+      largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
+      smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
+      vibrate: true, // (optional) default: true
+      vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
+      ongoing: false, // (optional) set whether this is an "ongoing" notification
+      priority: "high", // (optional) set notification priority, default: high
+      visibility: "private", // (optional) set notification visibility, default: private
+      importance: "high", // (optional) set notification importance, default: high
+      allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
+      playSound: false, // (optional) default: true
+      soundName: "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+      number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+      repeatType: "day", // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
+      message: "Don't miss any important forecast information", // (required)
+      date: new Date(Date.now() + 15 * 1000), // in 60 secs
+    });
+  }
+*/
   render(){
     if (this.state.isLoading) {
       return(
